@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-new" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="马云南">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何使用springboot发送邮件   ✅ 一、添加依赖在 pom.xml 中添加邮件启动器依赖： 1234&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-mail&lt;&#x2F;artifactId&gt;&lt;&#x2F;d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot邮箱">
+<meta property="og:url" content="http://example.com/2025/04/16/springboot%E9%82%AE%E7%AE%B1/index.html">
+<meta property="og:site_name" content="马云南博客">
+<meta property="og:description" content="如何使用springboot发送邮件   ✅ 一、添加依赖在 pom.xml 中添加邮件启动器依赖： 1234&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-mail&lt;&#x2F;artifactId&gt;&lt;&#x2F;d">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-16T15:02:23.000Z">
+<meta property="article:modified_time" content="2025-06-17T09:12:25.031Z">
+<meta property="article:author" content="马云南">
+<meta property="article:tag" content="springboot,邮箱验证">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>springboot邮箱 - 马云南博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>马云南</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>about</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="springboot邮箱"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-16 23:02" pubdate>
+          April 16, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          745 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">springboot邮箱</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>如何使用springboot发送邮件</p>
+</blockquote>
+<hr>
+<h2 id="✅-一、添加依赖"><a href="#✅-一、添加依赖" class="headerlink" title="✅ 一、添加依赖"></a>✅ 一、添加依赖</h2><p>在 <code>pom.xml</code> 中添加邮件启动器依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-mail<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是引入 JavaMailSender 所需模块 (<a target="_blank" rel="noopener" href="https://blog.csdn.net/Bilal_0/article/details/129938629?utm_source=chatgpt.com" title="springboot（07）邮件发送（qq邮箱） 原创 - CSDN博客">blog.csdn.net</a>)。</p>
+<hr>
+<h2 id="二、配置邮件账号"><a href="#二、配置邮件账号" class="headerlink" title="二、配置邮件账号"></a>二、配置邮件账号</h2><h3 id="🟦-QQ-邮箱"><a href="#🟦-QQ-邮箱" class="headerlink" title="🟦 QQ 邮箱"></a>🟦 QQ 邮箱</h3><p>在 <code>application.yml</code> 或 <code>application.properties</code> 中：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">mail:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-string">smtp.qq.com</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">your@qq.com</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-string">&lt;授权码&gt;</span><br>    <span class="hljs-attr">protocol:</span> <span class="hljs-string">smtp</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">465</span><br>    <span class="hljs-attr">default-encoding:</span> <span class="hljs-string">UTF-8</span><br>    <span class="hljs-attr">properties:</span><br>      <span class="hljs-attr">mail.smtp.auth:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.ssl.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.required:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🔧 QQ 邮箱需在邮箱设置中开启 <strong>POP3&#x2F;SMTP 服务</strong>，并生成 <strong>授权码</strong>，代替密码使用 (<a target="_blank" rel="noopener" href="https://blog.csdn.net/Bilal_0/article/details/129938629?utm_source=chatgpt.com" title="springboot（07）邮件发送（qq邮箱） 原创 - CSDN博客">blog.csdn.net</a>)。</p>
+</blockquote>
+<hr>
+<h3 id="🟨-网易-163-邮箱"><a href="#🟨-网易-163-邮箱" class="headerlink" title="🟨 网易 163 邮箱"></a>🟨 网易 163 邮箱</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">mail:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-string">smtp.163.com</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">your@163.com</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-string">&lt;授权码&gt;</span><br>    <span class="hljs-attr">protocol:</span> <span class="hljs-string">smtp</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">465</span><br>    <span class="hljs-attr">default-encoding:</span> <span class="hljs-string">UTF-8</span><br>    <span class="hljs-attr">properties:</span><br>      <span class="hljs-attr">mail.smtp.auth:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.ssl.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.required:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>同样需开启<strong>POP3&#x2F;SMTP 服务</strong>，并使用授权码登录 。</p>
+<hr>
+<h2 id="三、JavaMailSender-使用示例"><a href="#三、JavaMailSender-使用示例" class="headerlink" title="三、JavaMailSender 使用示例"></a>三、JavaMailSender 使用示例</h2><h3 id="1-简单纯文本邮件"><a href="#1-简单纯文本邮件" class="headerlink" title="1. 简单纯文本邮件"></a>1. 简单纯文本邮件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MailService</span> &#123;<br>  <span class="hljs-meta">@Autowired</span><br>  <span class="hljs-keyword">private</span> JavaMailSender mailSender;<br><br>  <span class="hljs-meta">@Value(&quot;$&#123;spring.mail.username&#125;&quot;)</span><br>  <span class="hljs-keyword">private</span> String from;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendSimpleMail</span><span class="hljs-params">(String to, String subject, String text)</span> &#123;<br>    <span class="hljs-type">SimpleMailMessage</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleMailMessage</span>();<br>    msg.setFrom(from);<br>    msg.setTo(to);<br>    msg.setSubject(subject);<br>    msg.setText(text);<br>    mailSender.send(msg);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>调用方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">mailService.sendSimpleMail(<span class="hljs-string">&quot;receiver@example.com&quot;</span>, <span class="hljs-string">&quot;测试&quot;</span>, <span class="hljs-string">&quot;你好，Spring Boot 邮件测试！&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>适用于快速发送简易通知邮件 。</p>
+<hr>
+<h3 id="2-HTML-邮件-附件"><a href="#2-HTML-邮件-附件" class="headerlink" title="2. HTML 邮件 &amp; 附件"></a>2. HTML 邮件 &amp; 附件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendHtmlMail</span><span class="hljs-params">(String to, String subject, String html)</span> <span class="hljs-keyword">throws</span> MessagingException &#123;<br>  <span class="hljs-type">MimeMessage</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> mailSender.createMimeMessage();<br>  <span class="hljs-type">MimeMessageHelper</span> <span class="hljs-variable">helper</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MimeMessageHelper</span>(msg, <span class="hljs-literal">true</span>, <span class="hljs-string">&quot;UTF-8&quot;</span>);<br>  helper.setFrom(from);<br>  helper.setTo(to);<br>  helper.setSubject(subject);<br>  helper.setText(html, <span class="hljs-literal">true</span>);<br>  <span class="hljs-comment">// 添加附件示例</span><br>  <span class="hljs-type">FileSystemResource</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileSystemResource</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;路径/文件.pdf&quot;</span>));<br>  helper.addAttachment(<span class="hljs-string">&quot;file.pdf&quot;</span>, file);<br>  mailSender.send(msg);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可发送富文本邮件并附带文件 。</p>
+<hr>
+<h2 id="四、完整配置和测试"><a href="#四、完整配置和测试" class="headerlink" title="四、完整配置和测试"></a>四、完整配置和测试</h2><h3 id="🧩-application-yml-综合示例"><a href="#🧩-application-yml-综合示例" class="headerlink" title="🧩 application.yml 综合示例"></a>🧩 application.yml 综合示例</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">mail:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-string">smtp.qq.com</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">your@qq.com</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-string">&lt;授权码&gt;</span><br>    <span class="hljs-attr">protocol:</span> <span class="hljs-string">smtp</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">465</span><br>    <span class="hljs-attr">default-encoding:</span> <span class="hljs-string">UTF-8</span><br>    <span class="hljs-attr">properties:</span><br>      <span class="hljs-attr">mail.smtp.auth:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.ssl.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.enable:</span> <span class="hljs-literal">true</span><br>      <span class="hljs-attr">mail.smtp.starttls.required:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>替换 <code>smtp.qq.com</code> 、<code>username</code> 和 <code>password</code> 可改为 163 或其他服务商 (<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2068818?utm_source=chatgpt.com" title="SpringBoot 2.x 集成QQ邮箱、网易系邮箱、Gmail邮箱发送邮件 - 腾讯云">cloud.tencent.com</a>)。</p>
+<hr>
+<h2 id="五、发送接口示例"><a href="#五、发送接口示例" class="headerlink" title="五、发送接口示例"></a>五、发送接口示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/email&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmailController</span> &#123;<br>  <span class="hljs-meta">@Autowired</span><br>  <span class="hljs-keyword">private</span> MailService mailService;<br><br>  <span class="hljs-meta">@GetMapping(&quot;/simple&quot;)</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sendSimple</span><span class="hljs-params">(String to, String subject, String text)</span> &#123;<br>    mailService.sendSimpleMail(to, subject, text);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Sent&quot;</span>;<br>  &#125;<br><br>  <span class="hljs-meta">@GetMapping(&quot;/html&quot;)</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sendHtml</span><span class="hljs-params">(String to)</span> <span class="hljs-keyword">throws</span> MessagingException &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">html</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&lt;h3&gt;消息&lt;/h3&gt;&lt;p&gt;这是一封HTML格式的邮件。&lt;/p&gt;&quot;</span>;<br>    mailService.sendHtmlMail(to, <span class="hljs-string">&quot;HTML 测试&quot;</span>, html);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Sent HTML&quot;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>启动后访问 <code>/email/simple?to=...</code> 或 <code>/email/html?to=...</code> 即可测试 (<a target="_blank" rel="noopener" href="https://dev.to/vatana7/how-to-send-email-in-springboot-springboot-tutorial-4jjm?utm_source=chatgpt.com" title="How to send Email In SpringBoot | SpringBoot Tutorial">dev.to</a>)。</p>
+<hr>
+<h2 id="六、常见注意事项"><a href="#六、常见注意事项" class="headerlink" title="六、常见注意事项"></a>六、常见注意事项</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>授权码</td>
+<td>邮箱开启 POP3&#x2F;SMTP 后使用，不是登录密码。</td>
+</tr>
+<tr>
+<td>SSL 与端口</td>
+<td>QQ 邮箱仅支持 SSL 的 465 端口 (<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2068818?utm_source=chatgpt.com" title="SpringBoot 2.x 集成QQ邮箱、网易系邮箱、Gmail邮箱发送邮件 - 腾讯云">cloud.tencent.com</a>)。</td>
+</tr>
+<tr>
+<td>Debug 模式</td>
+<td>可配置 <code>spring.mail.properties.mail.debug=true</code> 日志调试。</td>
+</tr>
+<tr>
+<td>错误时报警</td>
+<td>常见包括认证失败和连接超时，建议捕获异常后记录日志。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📝-总结"><a href="#📝-总结" class="headerlink" title="📝 总结"></a>📝 总结</h2><ol>
+<li>引入 <code>spring-boot-starter-mail</code> 依赖</li>
+<li>配置 <code>spring.mail.*</code>（邮箱、授权码、端口、SSL）</li>
+<li>使用 <code>JavaMailSender</code> 构建邮件（纯文本&#x2F;HTML&#x2F;附件）</li>
+<li>测试接口发送邮件</li>
+<li>调优日志&#x2F;debug 和异常处理</li>
+</ol>
+<p>这样，你就可以 <strong>轻松地使用 Spring Boot 集成 QQ 和 163 邮箱</strong> 来实现邮件发送功能，适用于注册验证、通知提醒等场景。如果还想了解发送 Gmail、群发、多附件等内容，请随时告诉我！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/springboot-%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81/" class="print-no-link">#springboot,邮箱验证</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>springboot邮箱</div>
+      <div>http://example.com/2025/04/16/springboot邮箱/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>马云南</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>April 16, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/16/deepseek/" title="如何本地部署deepseek？">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">如何本地部署deepseek？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/20/vue1/" title="vue2 的快速入门">
+                        <span class="hidden-mobile">vue2 的快速入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

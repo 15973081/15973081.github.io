@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-new" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="马云南">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="React Hooks 知识点整理useState 用于给函数组件创建状态数据。 语法：  1let [状态, 设置状态函数] &#x3D; useState(初始值)   setXxx 函数两种用法：  setXxx(新值) setXxx(回调函数)，回调函数接收最新状态，返回新的状态值。使用场景：当直接赋值获取不到最新状态时（如闭包问题），应用回调函数方式。    示例： 123456789101112">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Hook">
+<meta property="og:url" content="http://example.com/2024/06/21/react7/index.html">
+<meta property="og:site_name" content="马云南博客">
+<meta property="og:description" content="React Hooks 知识点整理useState 用于给函数组件创建状态数据。 语法：  1let [状态, 设置状态函数] &#x3D; useState(初始值)   setXxx 函数两种用法：  setXxx(新值) setXxx(回调函数)，回调函数接收最新状态，返回新的状态值。使用场景：当直接赋值获取不到最新状态时（如闭包问题），应用回调函数方式。    示例： 123456789101112">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-06-21T09:54:46.000Z">
+<meta property="article:modified_time" content="2025-06-17T09:12:11.856Z">
+<meta property="article:author" content="马云南">
+<meta property="article:tag" content="react,前端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>React Hook - 马云南博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>马云南</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>about</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React Hook"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-21 17:54" pubdate>
+          June 21, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          875 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">React Hook</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="React-Hooks-知识点整理"><a href="#React-Hooks-知识点整理" class="headerlink" title="React Hooks 知识点整理"></a>React Hooks 知识点整理</h1><h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><ul>
+<li>用于给函数组件创建状态数据。</li>
+<li>语法：  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> [状态, 设置状态函数] = <span class="hljs-title function_">useState</span>(初始值)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li><p><code>setXxx</code> 函数两种用法：</p>
+<ol>
+<li><code>setXxx(新值)</code></li>
+<li><code>setXxx(回调函数)</code>，回调函数接收最新状态，返回新的状态值。<br>使用场景：当直接赋值获取不到最新状态时（如闭包问题），应用回调函数方式。</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useEffect, useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">let</span> [msg, setMsg] = <span class="hljs-title function_">useState</span>(<span class="hljs-string">&#x27;atguigu&#x27;</span>)<br><br>    <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>            <span class="hljs-title function_">setMsg</span>(<span class="hljs-function"><span class="hljs-params">msg</span> =&gt;</span> msg + <span class="hljs-string">&#x27;_&#x27;</span>)<br>        &#125;, <span class="hljs-number">2000</span>)<br>    &#125;, [])<br><br>    <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>msg: &#123;msg&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setMsg(msg + &#x27;+&#x27;)&#125;&gt;msg + <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><ul>
+<li><p>模拟生命周期函数：</p>
+<ul>
+<li>componentDidMount</li>
+<li>componentDidUpdate</li>
+<li>componentWillUnmount</li>
+</ul>
+</li>
+<li><p>可以多次调用，监听不同的依赖。</p>
+</li>
+</ul>
+<p>用法：</p>
+<ul>
+<li>无第二参数：每次渲染后执行（componentDidMount + componentDidUpdate）</li>
+<li>空数组第二参数：只在挂载时执行（componentDidMount）</li>
+<li>数组指定依赖：监听依赖变化执行（componentDidMount + 监听变化）</li>
+<li>返回函数：卸载时执行（componentWillUnmount）</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;挂载后触发&#x27;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;组件卸载时触发&#x27;</span>)<br>    &#125;<br>&#125;, [])<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h2><ul>
+<li>用于创建ref对象，绑定并获取真实DOM元素。</li>
+<li>引入：<code>import &#123; useRef &#125; from &#39;react&#39;</code></li>
+<li>创建：<code>const ref = useRef()</code></li>
+<li>绑定：<code>&lt;input ref=&#123;ref&#125; /&gt;</code></li>
+<li>访问DOM：<code>ref.current</code></li>
+</ul>
+<h3 id="受控组件示例"><a href="#受控组件示例" class="headerlink" title="受控组件示例"></a>受控组件示例</h3><p>通过状态管理表单数据，onChange事件更新状态。</p>
+<h3 id="非受控组件示例"><a href="#非受控组件示例" class="headerlink" title="非受控组件示例"></a>非受控组件示例</h3><p>通过ref直接访问DOM元素值。</p>
+<hr>
+<h2 id="Hook-使用规则"><a href="#Hook-使用规则" class="headerlink" title="Hook 使用规则"></a>Hook 使用规则</h2><ul>
+<li>只能在函数组件或自定义Hook函数中调用。</li>
+<li>不可在类组件中使用。</li>
+<li>必须在顶层调用，不能在循环、条件或嵌套函数中调用，确保Hook调用顺序一致。</li>
+</ul>
+<hr>
+<h2 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h2><ul>
+<li>本质是函数，但函数名必须以 <code>use</code> 开头。</li>
+<li>可以在自定义Hook内部使用其他Hooks。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">useMyHook</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">let</span> [x, setX] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>)<br>    <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;自定义hook示例&#x27;</span>)<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Context（上下文）"><a href="#Context（上下文）" class="headerlink" title="Context（上下文）"></a>Context（上下文）</h2><ul>
+<li>用于祖先组件向后代组件传递数据，避免层层传递props。</li>
+<li>创建：<code>const context = React.createContext()</code></li>
+<li>提供数据：用 <code>context.Provider</code> 包裹后代组件并传递 <code>value</code>。</li>
+<li>使用数据：后代组件通过 <code>useContext(context)</code> 获取数据。</li>
+</ul>
+<hr>
+<h2 id="pubsub（发布订阅）"><a href="#pubsub（发布订阅）" class="headerlink" title="pubsub（发布订阅）"></a>pubsub（发布订阅）</h2><ul>
+<li><p>用于任意组件间通信。</p>
+</li>
+<li><p>通过发布-订阅模式实现。</p>
+</li>
+<li><p>安装：<code>npm i pubsub-js</code></p>
+</li>
+<li><p>导入：<code>import PubSub from &#39;pubsub-js&#39;</code></p>
+</li>
+<li><p>API：</p>
+<ul>
+<li>订阅：<code>let token = PubSub.subscribe(&#39;消息名&#39;, (msg, data) =&gt; &#123;&#125;)</code></li>
+<li>发布：<code>PubSub.publish(&#39;消息名&#39;, 数据)</code></li>
+<li>取消订阅：<code>PubSub.unsubscribe(token)</code> 或 <code>PubSub.unsubscribe(&#39;消息名&#39;)</code></li>
+<li>取消所有订阅：<code>PubSub.clearAllSubscriptions()</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="ajax（网络请求）"><a href="#ajax（网络请求）" class="headerlink" title="ajax（网络请求）"></a>ajax（网络请求）</h2><ul>
+<li>推荐使用 axios 发送请求。</li>
+<li>全局配置示例：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span><br><br><span class="hljs-keyword">const</span> request = axios.<span class="hljs-title function_">create</span>(&#123;<br>    <span class="hljs-attr">baseURL</span>: <span class="hljs-string">&#x27;https://api.github.com/&#x27;</span>,<br>    <span class="hljs-attr">timeout</span>: <span class="hljs-number">20000</span><br>&#125;)<br><br>request.<span class="hljs-property">interceptors</span>.<span class="hljs-property">response</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.<span class="hljs-property">data</span>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> request<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在组件中使用：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><span class="hljs-keyword">import</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./request&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getRepo</span>(<span class="hljs-params"></span>) &#123;<br>            <span class="hljs-keyword">let</span> res = <span class="hljs-keyword">await</span> request.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/search/repositories&#x27;</span>, &#123;<br>                <span class="hljs-attr">params</span>: &#123; <span class="hljs-attr">q</span>: <span class="hljs-string">&#x27;vue&#x27;</span>, <span class="hljs-attr">sort</span>: <span class="hljs-string">&#x27;stars&#x27;</span> &#125;<br>            &#125;)<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res)<br>        &#125;<br>        <span class="hljs-title function_">getRepo</span>()<br>    &#125;, [])<br><br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>App<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><ul>
+<li><p>用于大型项目中统一管理和维护组件间的状态。</p>
+</li>
+<li><p>三个核心概念：</p>
+<ul>
+<li><strong>store</strong>：状态仓库</li>
+<li><strong>reducer</strong>：用于操作状态的纯函数</li>
+<li><strong>action</strong>：描述状态变更的对象</li>
+</ul>
+</li>
+<li><p>基本使用：</p>
+<ul>
+<li>安装：<code>npm install @reduxjs/toolkit</code></li>
+<li>创建切片（slice）管理状态和reducers</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createSlice &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span><br><br><span class="hljs-keyword">const</span> countSlice = <span class="hljs-title function_">createSlice</span>(&#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;count&#x27;</span>,<br>    <span class="hljs-attr">initialState</span>: &#123; <span class="hljs-attr">num</span>: <span class="hljs-number">1000</span>, <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;atguigu&#x27;</span> &#125;,<br>    <span class="hljs-attr">reducers</span>: &#123;<br>        <span class="hljs-attr">addNum</span>: <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> &#123; state.<span class="hljs-property">num</span> += action.<span class="hljs-property">payload</span> &#125;,<br>        <span class="hljs-attr">decNum</span>: <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> &#123; state.<span class="hljs-property">num</span> -= action.<span class="hljs-property">payload</span> &#125;<br>    &#125;<br>&#125;)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> &#123; addNum, decNum &#125; = countSlice.<span class="hljs-property">actions</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> countSlice.<span class="hljs-property">reducer</span><br></code></pre></td></tr></table></figure>
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/react-%E5%89%8D%E7%AB%AF/" class="print-no-link">#react,前端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React Hook</div>
+      <div>http://example.com/2024/06/21/react7/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>马云南</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>June 21, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/14/javascript1/" title="javascript的学习(认识)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">javascript的学习(认识)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/20/react5/" title="react组件和使用2">
+                        <span class="hidden-mobile">react组件和使用2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

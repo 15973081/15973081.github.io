@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-new" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="马云南">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="DeepSeek-R1 本地部署完全指南（适合敏感数据用户）   🚀 为什么本地部署 DeepSeek-R1？ 隐私优先：适合金融、法律、财税等敏感场景，数据全程本地处理，不外传 :contentReference[oaicite:1]{index&#x3D;1}。 低延迟 &amp; 离线可用：无网络也能运行，避免云端服务卡顿 :contentReference[oaicite:2]{in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何本地部署deepseek？">
+<meta property="og:url" content="http://example.com/2025/05/16/deepseek/index.html">
+<meta property="og:site_name" content="马云南博客">
+<meta property="og:description" content="DeepSeek-R1 本地部署完全指南（适合敏感数据用户）   🚀 为什么本地部署 DeepSeek-R1？ 隐私优先：适合金融、法律、财税等敏感场景，数据全程本地处理，不外传 :contentReference[oaicite:1]{index&#x3D;1}。 低延迟 &amp; 离线可用：无网络也能运行，避免云端服务卡顿 :contentReference[oaicite:2]{in">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-16T12:59:35.000Z">
+<meta property="article:modified_time" content="2025-06-17T16:30:06.521Z">
+<meta property="article:author" content="马云南">
+<meta property="article:tag" content="AI,deepseek">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>如何本地部署deepseek？ - 马云南博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>马云南</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>about</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何本地部署deepseek？"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-16 20:59" pubdate>
+          May 16, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          888 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">如何本地部署deepseek？</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<blockquote>
+<p>DeepSeek-R1 本地部署完全指南（适合敏感数据用户）</p>
+</blockquote>
+<hr>
+<h1 id="🚀-为什么本地部署-DeepSeek-R1？"><a href="#🚀-为什么本地部署-DeepSeek-R1？" class="headerlink" title="🚀 为什么本地部署 DeepSeek-R1？"></a>🚀 为什么本地部署 DeepSeek-R1？</h1><ul>
+<li><strong>隐私优先</strong>：适合金融、法律、财税等敏感场景，数据全程本地处理，不外传 :contentReference[oaicite:1]{index&#x3D;1}。</li>
+<li><strong>低延迟 &amp; 离线可用</strong>：无网络也能运行，避免云端服务卡顿 :contentReference[oaicite:2]{index&#x3D;2}。</li>
+<li><strong>无须长期订阅</strong>：一次部署，省去云服务费用，长期更加经济 :contentReference[oaicite:3]{index&#x3D;3}。</li>
+</ul>
+<p>📌 <strong>适用人群</strong>：强数据安全需求、高频查询，或对隐私极度敏感的用户。<br>📌 <strong>不推荐给普通用户</strong>：如果你的数据量小、使用频率低，直接用网页版或 APP 更方便。</p>
+<hr>
+<h2 id="1️⃣-机器配置要求"><a href="#1️⃣-机器配置要求" class="headerlink" title="1️⃣ 机器配置要求"></a>1️⃣ 机器配置要求</h2><ul>
+<li><p><strong>最低（7B&#x2F;8B 蒸馏模型）</strong>：</p>
+<ul>
+<li>CPU：Intel i5 8th 或 AMD Ryzen 5 2600</li>
+<li>RAM：≥16 GB</li>
+<li>存储空闲空间：≥10 GB</li>
+<li>操作系统：Windows 10+&#x2F;macOS&#x2F;Linux</li>
+<li>网络：稳定网络仅用于下载模型</li>
+</ul>
+</li>
+<li><p><strong>推荐</strong>：配备 NVIDIA RTX GPU 才能运行 14B+ 模型</p>
+</li>
+</ul>
+<p>峰值体验建议从 7B&#x2F;8B 开始，深入后可向 14B → 32B → 70B（需强劲 GPU）扩展 :contentReference[oaicite:4]{index&#x3D;4}。</p>
+<hr>
+<h2 id="2️⃣-安装-Ollama"><a href="#2️⃣-安装-Ollama" class="headerlink" title="2️⃣ 安装 Ollama"></a>2️⃣ 安装 Ollama</h2><p>Ollama 是一款开源的本地 LLM 推理工具：</p>
+<ul>
+<li>访问官网下载安装包 → 一键安装（支持 Windows&#x2F;macOS&#x2F;Linux）:contentReference[oaicite:5]{index&#x3D;5}</li>
+</ul>
+<p>安装完成后，在终端&#x2F;命令行输入如下命令确认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama --version<br></code></pre></td></tr></table></figure>
+
+<p>提示版本号即为安装成功。</p>
+<hr>
+<h2 id="3️⃣-拉取并运行-DeepSeek-R1-模型"><a href="#3️⃣-拉取并运行-DeepSeek-R1-模型" class="headerlink" title="3️⃣ 拉取并运行 DeepSeek-R1 模型"></a>3️⃣ 拉取并运行 DeepSeek-R1 模型</h2><p>打开命令行，输入（以 8B 为例）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama run deepseek-r1:8b<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Ollama 会自动从官方拉取相应模型并开始运行&#x20;</li>
+<li>可选尺寸包括 <code>1.5b</code>, <code>7b</code>, <code>8b</code>, <code>14b</code>, <code>32b</code>, <code>70b</code>, 以及完整版 <code>671b</code> (<a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/1i6ggyh/got_deepseek_r1_running_locally_full_setup_guide/?utm_source=chatgpt.com" title="Got DeepSeek R1 running locally - Full setup guide and my ... - Reddit">reddit.com</a>)</li>
+<li>模型拉取后，将以 localhost 服务形式在本地运行</li>
+</ul>
+<p>若希望持续运行并通过 API 调用模型，可执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama serve<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4️⃣-接入桌面客户端-ChatBox-AI"><a href="#4️⃣-接入桌面客户端-ChatBox-AI" class="headerlink" title="4️⃣ 接入桌面客户端 ChatBox AI"></a>4️⃣ 接入桌面客户端 ChatBox AI</h2><ul>
+<li><p>下载 ChatBox AI（Windows&#x2F;macOS）(<a target="_blank" rel="noopener" href="https://deepseek.csdn.net/67b3e7719a0a3d048dd1abce.html?utm_source=chatgpt.com" title="本地部署Anything LLM+Ollama+DeepSeek R1打造智能知识库并 ...">deepseek.csdn.net</a>, <a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/1i6ggyh/got_deepseek_r1_running_locally_full_setup_guide/?utm_source=chatgpt.com" title="Got DeepSeek R1 running locally - Full setup guide and my ... - Reddit">reddit.com</a>)</p>
+</li>
+<li><p>打开设置：</p>
+<ul>
+<li>模型提供商：选择 “Ollama”</li>
+<li>默认 Host：<code>http://127.0.0.1:11434</code></li>
+<li>模型名：如 <code>deepseek-r1:8b</code></li>
+</ul>
+</li>
+</ul>
+<p>即可通过 ChatBox 进行图形化交互。启动后输入 “你是谁？” 即可验证部署是否成功。</p>
+<hr>
+<h2 id="5️⃣-构建本地知识库（使用-AnythingLLM）"><a href="#5️⃣-构建本地知识库（使用-AnythingLLM）" class="headerlink" title="5️⃣ 构建本地知识库（使用 AnythingLLM）"></a>5️⃣ 构建本地知识库（使用 AnythingLLM）</h2><ol>
+<li><p>安装 AnythingLLM 桌面版：按官网说明下载并运行 (<a target="_blank" rel="noopener" href="https://deepseek.csdn.net/67c7f86bb8d50678a2455ae6.html?utm_source=chatgpt.com" title="DeepSeek本地部署+AnythingLLM搭建个人知识库，真香？（附完整 ...">deepseek.csdn.net</a>, <a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/1i6ggyh/got_deepseek_r1_running_locally_full_setup_guide/?utm_source=chatgpt.com" title="Got DeepSeek R1 running locally - Full setup guide and my ... - Reddit">reddit.com</a>)</p>
+</li>
+<li><p>进入设置：</p>
+<ul>
+<li>语言模型后端选择 Ollama</li>
+<li>模型选 <code>deepseek-r1:8b</code>（或对应版本）</li>
+<li>嵌入模型选 <code>nomic-embed-text:latest</code></li>
+</ul>
+</li>
+<li><p>创建工作区（建议英文名避免乱码），上传本地文档（如 PDF、MD 文件）</p>
+</li>
+<li><p>点击 <strong>Save and Embed</strong>，完成向量化</p>
+</li>
+<li><p>输入问题，系统会检索相关内容并交由 DeepSeek-R1 回答，即构建完成</p>
+</li>
+</ol>
+<p>📌 这样就拥有了一个高效、安全、可检索的私有知识库系统！</p>
+<hr>
+<h2 id="✅-总结推荐表"><a href="#✅-总结推荐表" class="headerlink" title="✅ 总结推荐表"></a>✅ 总结推荐表</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐配置</th>
+<th>工具组合</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>轻量试验</td>
+<td>CPU + 16 GB</td>
+<td>Ollama + DeepSeek‑7B&#x2F;8B + ChatBox</td>
+<td>小白也能快速验证</td>
+</tr>
+<tr>
+<td>知识库部署</td>
+<td>GPU + ≥32 GB</td>
+<td>Ollama + DeepSeek‑14B&#x2F;32B + AnythingLLM</td>
+<td>适合中大型文档检索</td>
+</tr>
+<tr>
+<td>高端使用</td>
+<td>多GPU集群</td>
+<td>Ollama + DeepSeek‑70B&#x2F;671B + 自定义 API</td>
+<td>企业级性能满足严苛需求</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📚-参考资料链链接"><a href="#📚-参考资料链链接" class="headerlink" title="📚 参考资料链链接"></a>📚 参考资料链链接</h2><ul>
+<li>Reddit 用户实测分享部署流程 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DeepSeek?utm_source=chatgpt.com" title="DeepSeek">en.wikipedia.org</a>, <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21576927752?utm_source=chatgpt.com" title="用Ollama + Chatbox/AnythingLLm搭配DeepSeek从零搭建本地知识 ...">zhuanlan.zhihu.com</a>, <a target="_blank" rel="noopener" href="https://www.youxia.org/ollama-deepseek-cherry-studio%E3%80%81chatbox%E3%80%81anythingllm/?utm_source=chatgpt.com" title="基于Ollama与DeepSeek大模型的本地AI平台搭建指南：Cherry Studio">youxia.org</a>, <a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/1i6ggyh/got_deepseek_r1_running_locally_full_setup_guide/?utm_source=chatgpt.com" title="Got DeepSeek R1 running locally - Full setup guide and my ... - Reddit">reddit.com</a>, <a target="_blank" rel="noopener" href="https://deepseek.csdn.net/67b3e7719a0a3d048dd1abce.html?utm_source=chatgpt.com" title="本地部署Anything LLM+Ollama+DeepSeek R1打造智能知识库并 ...">deepseek.csdn.net</a>)</li>
+<li>DataCamp 技术详解环境配置与 API 调用&#x20;</li>
+<li>知乎、CSDN 多篇深度案例、图文辅助部署技巧 (<a target="_blank" rel="noopener" href="https://deepseek.csdn.net/67c7f86bb8d50678a2455ae6.html?utm_source=chatgpt.com" title="DeepSeek本地部署+AnythingLLM搭建个人知识库，真香？（附完整 ...">deepseek.csdn.net</a>)</li>
+</ul>
+<hr>
+<h3 id="⚠️-📌-温馨提示"><a href="#⚠️-📌-温馨提示" class="headerlink" title="⚠️ 📌 温馨提示"></a>⚠️ 📌 温馨提示</h3><ul>
+<li>本地部署是为数据安全与自主控制而生，非全民必需。</li>
+<li>推荐测试后再针对需求逐步升级模型尺寸。</li>
+<li>注重开发效率者，不妨使用云端版搭配本地知识库，达到“轻量部署 + 安全问答”的最佳平衡。</li>
+</ul>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI-deepseek/" class="print-no-link">#AI,deepseek</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何本地部署deepseek？</div>
+      <div>http://example.com/2025/05/16/deepseek/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>马云南</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>May 16, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/18/react3/" title="React 脚手架">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React 脚手架</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/16/springboot%E9%82%AE%E7%AE%B1/" title="springboot邮箱">
+                        <span class="hidden-mobile">springboot邮箱</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-new" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="马云南">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="🎯 基础玩法 &#x2F;tp &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt;快捷瞬移至指定坐标，或传送玩家之间。  &#x2F;gamemode &lt;creative|survival|adventure|spectator&gt; [玩家]自由切换游戏模式，适合测试和创造玩法。  &#x2F;time set &lt;day|night|数字&gt;快速调整白天&#x2F;黑夜时间，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的世界指令">
+<meta property="og:url" content="http://example.com/2024/11/13/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C%E6%8C%87%E4%BB%A4/index.html">
+<meta property="og:site_name" content="马云南博客">
+<meta property="og:description" content="🎯 基础玩法 &#x2F;tp &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt;快捷瞬移至指定坐标，或传送玩家之间。  &#x2F;gamemode &lt;creative|survival|adventure|spectator&gt; [玩家]自由切换游戏模式，适合测试和创造玩法。  &#x2F;time set &lt;day|night|数字&gt;快速调整白天&#x2F;黑夜时间，">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-11-13T09:03:54.000Z">
+<meta property="article:modified_time" content="2025-06-15T04:16:50.474Z">
+<meta property="article:author" content="马云南">
+<meta property="article:tag" content="我的世界, 游戏,指令">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>我的世界指令 - 马云南博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>马云南</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>about</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="我的世界指令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-13 17:03" pubdate>
+          November 13, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          838 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">我的世界指令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="🎯-基础玩法"><a href="#🎯-基础玩法" class="headerlink" title="🎯 基础玩法"></a>🎯 基础玩法</h2><ul>
+<li><p><code>/tp &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt;</code><br>快捷瞬移至指定坐标，或传送玩家之间。</p>
+</li>
+<li><p><code>/gamemode &lt;creative|survival|adventure|spectator&gt; [玩家]</code><br>自由切换游戏模式，适合测试和创造玩法。</p>
+</li>
+<li><p><code>/time set &lt;day|night|数字&gt;</code><br>快速调整白天&#x2F;黑夜时间，便于建筑或探索。</p>
+</li>
+<li><p><code>/weather &lt;clear|rain|thunder&gt; [持续时间]</code><br>控制气候变化，制造氛围或剧本场景。</p>
+</li>
+<li><p><code>/difficulty &lt;peaceful|easy|normal|hard&gt;</code><br>一键调整难度，轻松关闭敌对生物。</p>
+</li>
+</ul>
+<hr>
+<h2 id="📦-资源与状态"><a href="#📦-资源与状态" class="headerlink" title="📦 资源与状态"></a>📦 资源与状态</h2><ul>
+<li><p><code>/give @s minecraft:&lt;物品ID&gt; &lt;数量&gt;</code><br>获得任意物品或方块，自定义资源自由度极高。</p>
+</li>
+<li><p><code>/effect give @s &lt;效果&gt; &lt;秒数&gt; &lt;等级&gt;</code><br>给予夜视、速度等增益状态，支持批量附加。</p>
+</li>
+<li><p><code>/enchant @s minecraft:&lt;附魔ID&gt; &lt;等级&gt;</code><br>为手持物品添加附魔效果，提升战力与耐久。</p>
+</li>
+</ul>
+<hr>
+<h2 id="🛠-建筑与结构"><a href="#🛠-建筑与结构" class="headerlink" title="🛠 建筑与结构"></a>🛠 建筑与结构</h2><ul>
+<li><p><code>/fill &lt;x1&gt; &lt;y1&gt; &lt;z1&gt; &lt;x2&gt; &lt;y2&gt; &lt;z2&gt; &lt;方块&gt;</code><br>批量填充方块区域，快速建造地基或挖掘空间。</p>
+</li>
+<li><p><code>/clone &lt;x1&gt; &lt;y1&gt; &lt;z1&gt; &lt;x2&gt; &lt;y2&gt; &lt;z2&gt; &lt;目标x&gt; &lt;目标y&gt; &lt;目标z&gt;</code><br>复制并粘贴结构，轻松复刻建筑。</p>
+</li>
+<li><p><code>/setblock &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;方块&gt;</code><br>设置单一方块，适合调试或精细搭建。</p>
+</li>
+<li><p><code>/locate &lt;structure|biome&gt; &lt;名称&gt;</code><br>查找最近的地标结构或生物群系，节省探索时间。</p>
+</li>
+</ul>
+<hr>
+<h2 id="🛡-管理与调试"><a href="#🛡-管理与调试" class="headerlink" title="🛡 管理与调试"></a>🛡 管理与调试</h2><ul>
+<li><p><code>/list</code><br>查看当前在线玩家列表，方便交流与管理。</p>
+</li>
+<li><p><code>/kick &lt;玩家&gt; [原因]</code> &#x2F; <code>/ban &lt;玩家&gt;</code> &#x2F; <code>/pardon &lt;玩家&gt;</code><br>管理玩家权限，维护服务器秩序。</p>
+</li>
+<li><p><code>/op &lt;玩家&gt;</code> &#x2F; <code>/deop &lt;玩家&gt;</code><br>授予或撤回管理员权限。</p>
+</li>
+<li><p><code>/save-all</code>, <code>/stop</code>, <code>/reload</code><br>保存世界、关闭服务器或重新加载设置。</p>
+</li>
+</ul>
+<hr>
+<h2 id="📘-Bedrock-教育专用"><a href="#📘-Bedrock-教育专用" class="headerlink" title="📘 Bedrock &amp; 教育专用"></a>📘 Bedrock &amp; 教育专用</h2><ul>
+<li><p><code>/ability &lt;目标&gt; mayfly|mute|worldbuilder true/false</code><br>开启飞行、静音或建造权限（教育版支持）。([edusupport.minecraft.net][4])</p>
+</li>
+<li><p><code>/camerashake &lt;玩家&gt; &lt;强度&gt; &lt;持续时间&gt; [类型]</code><br>触发镜头抖动效果，营造震撼&#x2F;disturbance（Bedrock&#x2F;教育版）。([beebom.com][5])</p>
+</li>
+<li><p><code>/alwaysday</code> &#x2F; <code>/daylock</code><br>锁定昼夜周期（日照永恒版本）。</p>
+</li>
+<li><p><code>/toggledownfall</code><br>切换雨雪效果（Bedrock 专属）。</p>
+</li>
+</ul>
+<hr>
+<h2 id="💡-使用建议"><a href="#💡-使用建议" class="headerlink" title="💡 使用建议"></a>💡 使用建议</h2><ol>
+<li><p><strong>生存 &#x2F; 探索</strong></p>
+<ul>
+<li><code>/time set day</code> + <code>/gamerule keepInventory true</code> + <code>/locate village</code>  → 持续挂机生存线索。</li>
+</ul>
+</li>
+<li><p><strong>创意 &#x2F; 建筑</strong></p>
+<ul>
+<li>配合 <code>/fill</code> + <code>/clone</code> + <code>/execute</code> 批量建造复杂结构。</li>
+</ul>
+</li>
+<li><p><strong>服务器管理</strong></p>
+<ul>
+<li><code>/op</code> + <code>/kick</code> + <code>/ban</code> + <code>/save-all</code> 保障环境稳定与数据安全。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="⚙-高级-自动化"><a href="#⚙-高级-自动化" class="headerlink" title="⚙ 高级 &amp; 自动化"></a>⚙ 高级 &amp; 自动化</h2><ul>
+<li><code>/execute … run …</code><br>强力命令执行器，支持条件检测、嵌套触发、复杂脚本。比如：<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs txt">  /execute if entity @a[team=red] run say 红队有人！<br>  /execute as @a[nbt=&#123;SelectedItem:&#123;id:&quot;minecraft:bone&quot;,Count:8b&#125;&#125;] run scoreboard players set @s Bones8 1<br>````<br><br><br><br>* `/scoreboard objectives add &lt;目标名&gt; dummy`<br>  创建记分板目标<br>  `/scoreboard players add @p &lt;目标名&gt; &lt;数量&gt;` 增计分板数值<br>  `/scoreboard objectives setdisplay sidebar &lt;目标名&gt;` 显示在侧栏。<br>  用于统计、触发机制、小游戏等。([minecraft.fandom.com][1], [learn.microsoft.com][2])<br><br>* `/summon &lt;实体ID&gt; [x] [y] [z] [NBT]`<br>  生成怪物、物品、实体，定制丰富。([minecraft.net][3])<br><br>* `/kill &lt;目标&gt;`<br>  清理实体或终结玩家，常用于重置或调试。<br>---<br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<blockquote>
+<p>“命令虽有边界，你的想象无限。”<br>从普通玩家到世界设计师，只需一行 &#x2F;execute，开启你的《我的世界》传奇！</p>
+</blockquote>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C-%E6%B8%B8%E6%88%8F-%E6%8C%87%E4%BB%A4/" class="print-no-link">#我的世界, 游戏,指令</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>我的世界指令</div>
+      <div>http://example.com/2024/11/13/我的世界指令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>马云南</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>November 13, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/18/hexo%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/" title="hexo报错解决">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">hexo报错解决</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/09/wang/" title="堂吉诃德">
+                        <span class="hidden-mobile">堂吉诃德</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
